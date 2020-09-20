@@ -1,6 +1,12 @@
 import React, {Component} from "react";
+import PropTypes from 'prop-types';
 
 export default class DebuggingComponent extends Component {
+	static propTypes = {
+		pendingActions: PropTypes.array,
+		messages: PropTypes.array,
+	}
+
 	constructor(props, context) {
 		super(props, context);
 

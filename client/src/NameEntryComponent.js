@@ -1,6 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class NameEntryComponent extends React.Component {
+	static propTypes = {
+		onSubmit: PropTypes.func,
+		defaultValue: PropTypes.string,
+	}
+
 	constructor(props, context) {
 		super(props, context);
 
