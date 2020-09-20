@@ -13,7 +13,6 @@ class App extends React.Component {
       pendingActions: [],
       board: new PokerBoard(),
       serverBoard: new PokerBoard(),
-      joining: true,
       clientId: null,
       disconnected: false,
     };
@@ -99,6 +98,12 @@ class App extends React.Component {
     })
   }
 
+  clearVotes = () =>
+    this.sendAction({action: PokerBoard.ACTION_CLEAR_VOTES});
+
+  showVotes = () =>
+    this.sendAction({action: PokerBoard.ACTION_SHOW_VOTES});
+
   componentWillUnmount() {
     this.ws && this.ws.close();
   }
@@ -134,8 +139,8 @@ class App extends React.Component {
               <PokerBoardComponent board={this.state.board}
                                    vote={this.vote}
                                    changeCurrentlyVoting={this.changeCurrentlyVoting}
-                                   clearVotes={() => this.sendAction({action: PokerBoard.ACTION_CLEAR_VOTES})}
-                                   showVotes={() => this.sendAction({action: PokerBoard.ACTION_SHOW_VOTES})}
+                                   clearVotes={this.clearVotes}
+                                   showVotes={this.showVotes}
               />
             </div>
           }
