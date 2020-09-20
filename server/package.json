@@ -1,0 +1,17 @@
+{
+  "name": "pointingpoker-server",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Backend for pointing poker",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jason Winnebeck <gillius@gillius.org>",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pointingpoker-common": "file:../common",
+    "ws": "^7.3.1"
+  }
+}

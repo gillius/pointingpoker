@@ -1,0 +1,23 @@
+{
+  "name": "pointingpoker-common",
+  "version": "0.1.0",
+  "private": true,
+  "description": "",
+  "main": "dist/PokerBoard.js",
+  "scripts": {
+    "build": "npx babel src --out-dir dist --source-maps",
+    "start": "npx babel src --watch --out-dir dist --source-maps",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jason Winnebeck <gillius@gillius.org>",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "immer": "^7.0.9"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/preset-env": "^7.11.5"
+  }
+}
