@@ -2,6 +2,7 @@ import React from 'react';
 import PokerBoardComponent from "./PokerBoardComponent";
 import PokerBoard from "pointingpoker-common";
 import NameEntryComponent from "./NameEntryComponent";
+import DebuggingComponent from "./DebuggingComponent";
 
 class App extends React.Component {
   constructor(props, context) {
@@ -12,7 +13,6 @@ class App extends React.Component {
       pendingActions: [],
       board: new PokerBoard(),
       serverBoard: new PokerBoard(),
-      showDebugging: false,
       joining: true,
       clientId: null,
       disconnected: false,
@@ -118,25 +118,6 @@ class App extends React.Component {
   }
 
   render() {
-    let messages;
-    if (this.state.showDebugging) {
-      messages =
-          <div>
-            <p>Pending Actions:</p>
-            {
-              this.state.pendingActions.map(it => (
-                  <p key={it.seq}>{JSON.stringify(it)}</p>
-              ))
-            }
-            <p>Messages:</p>
-            {
-              this.state.messages.map((it, index) => (
-                  <p key={index}>{it}</p>
-              ))
-            }
-          </div>
-    }
-
     const myself = this.state.board.getPlayer(this.state.clientId);
 
     return (
@@ -164,9 +145,8 @@ class App extends React.Component {
               <h3>Disconnected from Server. Please Reload the page.</h3>
             </div>
           }
-          <p><button onClick={() => this.setState(s => ({showDebugging: !s.showDebugging}))}>
-            {this.state.showDebugging ? 'Hide' : 'Show'} Debugging Messages</button></p>
-          {messages}
+          <DebuggingComponent pendingActions={this.state.pendingActions}
+                              messages={this.state.messages}/>
         </div>
     );
   }
