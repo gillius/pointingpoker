@@ -39,10 +39,12 @@ export default class DebuggingComponent extends Component {
 					</div>
 		}
 
-		return [
-			<p><button onClick={this.toggleShow}>
-				{this.state.showDebugging ? 'Hide' : 'Show'} Debugging Messages</button></p>,
-			messages
-		]
+		return (
+				<>
+					<p><button onClick={this.toggleShow}>
+						{this.state.showDebugging ? 'Hide' : 'Show'} Debugging Messages</button></p>
+					{messages}
+				</>
+		);
 	}
 }
