@@ -3,8 +3,10 @@ import PokerBoardComponent from "./PokerBoardComponent";
 import PokerBoard from "pointingpoker-common";
 import NameEntryComponent from "./NameEntryComponent";
 import DebuggingComponent from "./DebuggingComponent";
+import PokerBoardClient from "./PokerBoardClient";
+import {autorun} from "mobx";
 
-class App extends React.Component {
+export default class App extends React.Component {
   constructor(props, context) {
     super(props, context);
 
@@ -19,103 +21,46 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.ws = new WebSocket('ws://localhost:8080/ws');
+    this.client = new PokerBoardClient('ws://localhost:8080/ws');
 
-    this.ws.addEventListener('open', () => {
-      this.addMessage("Connection opened");
+    autorun(() => {
+      this.setState({
+        messages: this.client.messages,
+        pendingActions: this.client.pendingActions,
+        board: this.client.board,
+        serverBoard: this.client.serverBoard,
+        clientId: this.client.clientId,
+        disconnected: this.client.disconnected
+      })
     });
-
-    this.clientId = null;
-    this.nextSeq = 1;
-
-    this.ws.addEventListener('message', m => {
-      this.addMessage(m.data);
-      const message = JSON.parse(m.data);
-
-      if (message.ack !== undefined) {
-        //Remove all acknowledged actions
-        this.setState(state => ({
-          pendingActions: state.pendingActions.filter(it => it.seq > message.ack)
-        }))
-
-      } else if (!this.clientId && message.clientId) { //initial message
-        this.clientId = message.clientId;
-        this.setState({clientId: this.clientId});
-        this.updateBoardFromServer(message.snapshot);
-
-      } else {
-        this.updateBoardFromServer(message);
-      }
-    });
-
-    this.ws.addEventListener('close', () => {
-      this.addMessage("Connection closed");
-      this.setState({disconnected: true});
-    });
-  }
-
-  updateBoardFromServer(action) {
-    this.setState(state => {
-      const serverBoard = state.serverBoard.processAction(action);
-
-      //rebuild our local board with any pending actions since server's state
-      let board = serverBoard;
-      state.pendingActions.forEach(a => {
-        board = board.processAction(a);
-      });
-
-      return {
-        serverBoard,
-        board
-      }
-    });
-  }
-
-  sendAction(msg) {
-    const action = {
-      ...msg,
-      id: this.clientId,
-      seq: this.nextSeq++,
-    };
-    this.setState(state => ({
-      pendingActions: state.pendingActions.concat([action]),
-      board: state.board.processAction(action)
-    }));
-    this.ws.send(JSON.stringify(action));
   }
 
   vote = (points) => {
-    this.sendAction({
+    this.client.sendAction({
       action: PokerBoard.ACTION_VOTE,
       vote: points
     });
   }
 
   changeCurrentlyVoting = (currentlyVoting) => {
-    this.sendAction({
+    this.client.sendAction({
       action: PokerBoard.ACTION_CURRENTLY_VOTING,
       currentlyVoting
-    })
+    });
   }
 
   clearVotes = () =>
-    this.sendAction({action: PokerBoard.ACTION_CLEAR_VOTES});
+    this.client.sendAction({action: PokerBoard.ACTION_CLEAR_VOTES});
 
   showVotes = () =>
-    this.sendAction({action: PokerBoard.ACTION_SHOW_VOTES});
+    this.client.sendAction({action: PokerBoard.ACTION_SHOW_VOTES});
 
   componentWillUnmount() {
-    this.ws && this.ws.close();
-  }
-
-  addMessage = (m) => {
-    this.setState(state => ({
-      messages: state.messages.concat(m).slice(-50)
-    }));
+    this.client && this.client.close();
   }
 
   completeJoin = name => {
-    this.sendAction({
+    this.client.sendAction({
       action: PokerBoard.ACTION_COMPLETE_JOIN,
       name
     });
@@ -156,5 +101,3 @@ class App extends React.Component {
     );
   }
 }
-
-export default App;
