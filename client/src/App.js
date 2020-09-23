@@ -71,7 +71,7 @@ export default class App extends React.Component {
     const myself = this.state.board.getPlayer(this.state.clientId);
 
     return (
-        <div>
+        <div className="container">
           {
             !this.state.disconnected && myself && myself.joining &&
             <NameEntryComponent onSubmit={this.completeJoin}
@@ -80,8 +80,9 @@ export default class App extends React.Component {
           {
             !this.state.disconnected && myself && !myself.joining &&
             <div>
-              <h3>{myself.name}</h3>
+              <h2>{myself.name}</h2>
               <PokerBoardComponent board={this.state.board}
+                                   myPlayer={myself}
                                    vote={this.vote}
                                    changeCurrentlyVoting={this.changeCurrentlyVoting}
                                    clearVotes={this.clearVotes}

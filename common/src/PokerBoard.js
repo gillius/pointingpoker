@@ -85,8 +85,61 @@ export default class PokerBoard {
 		return this.players.find(it => it.id === playerId);
 	}
 
-	showVotes() {
+	/**
+	 * Returns true if we should be showing the votes.
+	 *
+	 * @returns {boolean}
+	 */
+	get showVotes() {
 		return this.forceShowVotes || this.players.every(it => it.joining || (it.vote !== undefined && it.vote !== null))
+	}
+
+	/**
+	 * Returns an array of valid votes, or empty array if none.
+	 *
+	 * @returns {number[]}
+	 */
+	get validVotes() {
+		return this.players
+				.filter(it => typeof it.vote === 'number')
+				.map(it => it.vote);
+	}
+
+	/**
+	 * Returns the average vote value, or 0 if there are no votes.
+	 *
+	 * @returns {number}
+	 */
+	get averageVote() {
+		const allVotes = this.validVotes;
+
+		if (allVotes.length === 0) return 0;
+
+		const sumVotes = allVotes.reduce((a,b) => a+b);
+		return sumVotes / allVotes.length;
+	}
+
+	/**
+	 * Returns an array of objects {vote, count} sorted by vote.
+	 *
+	 * @returns {{vote: number, count: number}[]}
+	 */
+	get voteCounts() {
+		const allVotes = this.validVotes;
+
+		const map = new Map();
+		for (const vote of allVotes) {
+			map.set(vote, (map.get(vote) || 0) + 1);
+		}
+
+		const ret = [];
+		for (const entry of map) {
+			ret.push({vote: entry[0], count: entry[1]});
+		}
+
+		ret.sort((a, b) => a.vote - b.vote);
+
+		return ret;
 	}
 
 	processAction(action) {

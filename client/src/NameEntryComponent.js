@@ -28,9 +28,11 @@ export default class NameEntryComponent extends React.Component {
 		return (
 				<div>
 					<h3>Enter Player Name:</h3>
-					<form onSubmit={this.handleSubmit}>
-						<input type="text" name="name" value={this.state.name} onChange={this.handleChange}/>
-						<button type="submit">Join</button>
+					<form onSubmit={this.handleSubmit} className="form-inline">
+						<input className="form-control mb-2 mr-sm-2" type="text" name="name"
+						       value={this.state.name}
+						       onChange={this.handleChange}/>
+						<button className="btn btn-primary mb-2" type="submit">Join</button>
 					</form>
 				</div>
 		);

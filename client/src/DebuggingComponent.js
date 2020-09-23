@@ -6,22 +6,30 @@ export default function DebuggingComponent({pendingActions, messages}) {
 
 	return (
 			<>
-				<p><button onClick={() => setShowDebugging(!showDebugging)}>
-					{showDebugging ? 'Hide' : 'Show'} Debugging Messages</button></p>
+				<p className="mt-5">
+					<button className="btn btn-light btn-sm"
+					        onClick={() => setShowDebugging(!showDebugging)}>
+						{showDebugging ? 'Hide' : 'Show'} Debug Info
+					</button>
+				</p>
 				{showDebugging &&
 				<>
-					<p>Pending Actions:</p>
-					{
-						pendingActions.map(it => (
-								<p key={it.seq}>{JSON.stringify(it)}</p>
-						))
-					}
-					<p>Messages:</p>
-					{
-						messages.map((it, index) => (
-								<p key={index}>{it}</p>
-						))
-					}
+					<h5>Pending Actions:</h5>
+					<ul className="list-unstyled">
+						{
+							pendingActions.map(it => (
+									<li key={it.seq}>{JSON.stringify(it)}</li>
+							))
+						}
+					</ul>
+					<h5>Messages:</h5>
+					<ul className="list-unstyled">
+						{
+							messages.map((it, index) => (
+									<li key={index}>{it}</li>
+							))
+						}
+					</ul>
 				</>
 				}
 			</>
