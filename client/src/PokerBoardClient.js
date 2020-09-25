@@ -1,4 +1,4 @@
-import {decorate, observable} from "mobx"
+import { decorate, observable } from "mobx"
 import PokerBoard from "pointingpoker-common";
 
 /**
