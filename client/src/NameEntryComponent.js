@@ -15,7 +15,7 @@ export default class NameEntryComponent extends React.Component {
 			name: this.props.defaultValue || ''
 		}
 	}
-	generatName = () => {
+	generateName = () => {
 		const i = Math.floor(Math.random() * Math.floor(2));
 		const nouns = [animals, starWars];
 		const name = uniqueNamesGenerator({
@@ -45,7 +45,7 @@ export default class NameEntryComponent extends React.Component {
 					<input className="form-control mb-2 mr-sm-2" type="text" name="name"
 						value={this.state.name}
 						onChange={this.handleChange} />
-					<button className="btn btn-primary mr-2 mb-2" onClick={this.generatName} type="button">Generate Name</button>
+					<button className="btn btn-primary mr-2 mb-2" onClick={this.generateName} type="button">Generate Name</button>
 					<button className="btn btn-primary mb-2" type="submit">Join</button>
 				</form>
 			</div>
