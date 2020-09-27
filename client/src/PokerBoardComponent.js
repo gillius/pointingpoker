@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function PokerBoardComponent(props) {
-	const {pointOptions, currentlyVoting, players} = props.board;
+	const {pointOptions, currentlyVoting, activePlayers, observers} = props.board;
 
 	function changeCurrentlyVoting(e) {
 		props.changeCurrentlyVoting(e.target.value);
@@ -23,16 +23,21 @@ export default function PokerBoardComponent(props) {
 			<button type="button" className="btn btn-primary mr-2" onClick={props.clearVotes}>Clear Votes</button>
 			<button type="button" className="btn btn-primary" onClick={props.showVotes}>Show Votes</button>
 		</form>
-		<h4>Vote:</h4>
-		<div className="voteOptions mb-3">
-			{
-				pointOptions.map(it => (
-						<button className={"btn btn-primary mr-2" + (it === props.myPlayer.vote ? " active" : "")}
-						        key={it}
-						        onClick={() => props.vote(it)}>{it}</button>
-				))
-			}
-		</div>
+		{
+			props.vote &&
+			<>
+				<h4>Vote:</h4>
+				<div className="voteOptions mb-3">
+					{
+						pointOptions.map(it => (
+								<button className={"btn btn-primary mr-2" + (it === props.myPlayer.vote ? " active" : "")}
+								        key={it}
+								        onClick={() => props.vote(it)}>{it}</button>
+						))
+					}
+				</div>
+			</>
+		}
 		<div className="row">
 			<div className="col">
 				<h3>Players</h3>
@@ -45,7 +50,7 @@ export default function PokerBoardComponent(props) {
 					</thead>
 					<tbody>
 					{
-						players.map(player => (
+						activePlayers.map(player => (
 								<tr key={player.id}>
 									<td>{player.joining ? 'Incoming player...' : player.name}</td>
 									<td>{showVotes || player == props.myPlayer ? player.vote : "..."}</td>
@@ -54,6 +59,13 @@ export default function PokerBoardComponent(props) {
 					}
 					</tbody>
 				</table>
+				{
+					!!observers.length &&
+					<>
+						<h3>Observers</h3>
+						<p>{observers.map(it => it.name).join(', ')}</p>
+					</>
+				}
 			</div>
 			<div className="col">
 				{

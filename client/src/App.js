@@ -1,7 +1,7 @@
 import React from 'react';
 import PokerBoardComponent from "./PokerBoardComponent";
 import PokerBoard from "pointingpoker-common";
-import NameEntryComponent from "./NameEntryComponent";
+import JoinComponent from "./JoinComponent";
 import DebuggingComponent from "./DebuggingComponent";
 import PokerBoardClient from "./PokerBoardClient";
 import {autorun} from "mobx";
@@ -59,10 +59,11 @@ export default class App extends React.Component {
     this.client && this.client.close();
   }
 
-  completeJoin = name => {
+  completeJoin = (name, observer) => {
     this.client.sendAction({
       action: PokerBoard.ACTION_COMPLETE_JOIN,
-      name
+      name,
+      observer,
     });
     window.localStorage.setItem('name', name);
   }
@@ -74,8 +75,8 @@ export default class App extends React.Component {
         <div className="container">
           {
             !this.state.disconnected && myself && myself.joining &&
-            <NameEntryComponent onSubmit={this.completeJoin}
-                                defaultValue={window.localStorage.getItem('name') || 'Player'}/>
+            <JoinComponent onSubmit={this.completeJoin}
+                           defaultValue={window.localStorage.getItem('name') || 'Player'}/>
           }
           {
             !this.state.disconnected && myself && !myself.joining &&
@@ -83,7 +84,7 @@ export default class App extends React.Component {
               <h2>{myself.name}</h2>
               <PokerBoardComponent board={this.state.board}
                                    myPlayer={myself}
-                                   vote={this.vote}
+                                   vote={myself.observer ? null : this.vote}
                                    changeCurrentlyVoting={this.changeCurrentlyVoting}
                                    clearVotes={this.clearVotes}
                                    showVotes={this.showVotes}

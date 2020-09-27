@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { uniqueNamesGenerator, starWars, adjectives, animals, colors } from 'unique-names-generator';
 
-export default class NameEntryComponent extends React.Component {
+export default class JoinComponent extends React.Component {
 	static propTypes = {
 		onSubmit: PropTypes.func,
 		defaultValue: PropTypes.string,
@@ -12,7 +12,8 @@ export default class NameEntryComponent extends React.Component {
 		super(props, context);
 
 		this.state = {
-			name: this.props.defaultValue || ''
+			name: this.props.defaultValue || '',
+			observer: false
 		}
 	}
 	generateName = () => {
@@ -33,7 +34,7 @@ export default class NameEntryComponent extends React.Component {
 	}
 
 	handleSubmit = event => {
-		this.props.onSubmit(this.state.name);
+		this.props.onSubmit(this.state.name, this.state.observer);
 		event.preventDefault();
 	}
 
@@ -46,7 +47,13 @@ export default class NameEntryComponent extends React.Component {
 						value={this.state.name}
 						onChange={this.handleChange} />
 					<button className="btn btn-primary mr-2 mb-2" onClick={this.generateName} type="button">Generate Name</button>
-					<button className="btn btn-primary mb-2" type="submit">Join</button>
+					<button className="btn btn-primary mr-2 mb-2" type="submit">Join</button>
+					<div className="form-check form-check-inline mb-2 mr-sm-2">
+						<input type="checkbox" className="form-check-input" id="ObserverCheckbox"
+						       checked={this.state.checked}
+						       onChange={e => this.setState({observer: e.target.checked})}/>
+						<label htmlFor="ObserverCheckbox" className="form-check-label">As Observer</label>
+					</div>
 				</form>
 			</div>
 		);

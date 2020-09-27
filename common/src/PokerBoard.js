@@ -16,6 +16,7 @@ const actions = {
 			joining: true,
 			name: null,
 			vote: null,
+			observer: false,
 		})
 	}),
 
@@ -23,6 +24,7 @@ const actions = {
 		const player = draft.players.find(it => it.id === action.id)
 		if (player) {
 			player.name = action.name
+			player.observer = action.observer
 			player.joining = false
 		}
 	}),
@@ -81,6 +83,14 @@ export default class PokerBoard {
 	static get ACTION_SHOW_VOTES() { return "showVotes" }
 	static get ACTION_CLEAR_VOTES() { return "clearVotes" }
 
+	get activePlayers() {
+		return this.players.filter(it => !it.joining && !it.observer);
+	}
+
+	get observers() {
+		return this.players.filter(it => it.observer);
+	}
+
 	getPlayer(playerId) {
 		return this.players.find(it => it.id === playerId);
 	}
@@ -91,7 +101,8 @@ export default class PokerBoard {
 	 * @returns {boolean}
 	 */
 	get showVotes() {
-		return this.forceShowVotes || this.players.every(it => it.joining || (it.vote !== undefined && it.vote !== null))
+		return this.forceShowVotes ||
+				this.players.every(it => it.joining || it.observer || (it.vote !== undefined && it.vote !== null))
 	}
 
 	/**
@@ -101,7 +112,7 @@ export default class PokerBoard {
 	 */
 	get validVotes() {
 		return this.players
-				.filter(it => typeof it.vote === 'number')
+				.filter(it => typeof it.vote === 'number' && !it.observer)
 				.map(it => it.vote);
 	}
 
