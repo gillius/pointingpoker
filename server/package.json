@@ -12,6 +12,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "pointingpoker-common": "file:../common",
+    "pointingpoker-client": "file:../client",
     "ws": "^7.3.1"
   }
 }

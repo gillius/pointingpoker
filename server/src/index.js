@@ -10,9 +10,11 @@ const server = http.createServer(app);
 const wss = new WebSocket.Server({server, path: '/ws'});
 const delay = 0;
 
-app.use(express.static(path.join(__dirname, '..', 'build')));
+const servePath = path.join(__dirname, '..', 'node_modules', 'pointingpoker-client', 'build');
+
+app.use(express.static(servePath));
 app.get('/', function(req, res) {
-	res.sendFile(path.join(__dirname, '..', 'build', 'index.html'));
+	res.sendFile(path.join(servePath, 'index.html'));
 });
 
 let nextClientId = 1;
