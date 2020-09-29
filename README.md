@@ -22,16 +22,12 @@ License is GPL version 3 or any later version.
 
 ## Production mode
 
-* Build the common library in `common` folder with `npm build`
-* Build the frontend in `client` with `npm build`
-* Start the backend in `server` with `node index.js`
-  * Note the symlink `server/build`, which points to `client/build` -- that's how the server serves the production build
-    of the app.
+* Build the common library in `common` folder with `npm ci && npm run build`
+* Build the frontend in `client` with `npm ci && npm run build`
+* Start the backend in `server` with `npm ci && node src/index.js`
 * Visit http://localhost:8080/
 
 # Known Issues
 
 1. Unsupported any proxies that block or degrade websocket functionality (i.e. by putting a short limit on websocket duration).
 1. No attempt made to reconnect to the server if the connection is lost
-1. Need styling
-1. Needs refactoring and documentation
