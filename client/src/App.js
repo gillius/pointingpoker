@@ -21,7 +21,7 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    this.client = new PokerBoardClient('ws://localhost:8080/ws');
+    this.client = new PokerBoardClient();
 
     autorun(() => {
       this.setState({

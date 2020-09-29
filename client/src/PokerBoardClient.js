@@ -1,4 +1,4 @@
-import { decorate, observable } from "mobx"
+import {decorate, observable} from "mobx"
 import PokerBoard from "pointingpoker-common";
 
 /**
@@ -14,7 +14,22 @@ export default class PokerBoardClient {
 	disconnected = false;
 	pendingActions = [];
 
+	/**
+	 * Constructs a new poker board client.
+	 *
+	 * @param {string=} url
+	 *   if provided, the websocket URL to connect with. If not provided, forms a URL based on window.location
+	 *   assuming the websocket is hosted at relative URL "ws", but with ws (if http) and wss (if https) protocol.
+	 *   In the development environment we assume port 8080, else we use port from window.location (if any)
+	 */
 	constructor(url) {
+		if (!url) {
+			const parsedUrl = new URL(window.location);
+			parsedUrl.protocol = parsedUrl.protocol === 'http:' ? 'ws' : 'wss';
+			if (process.env.NODE_ENV === 'development')
+				parsedUrl.port = "8080";
+			url = new URL('/ws', parsedUrl).href;
+		}
 		this.ws = new WebSocket(url);
 
 		this.ws.addEventListener('open', () => {
