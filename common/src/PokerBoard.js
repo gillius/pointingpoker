@@ -148,7 +148,7 @@ export default class PokerBoard {
 			ret.push({vote: entry[0], count: entry[1]});
 		}
 
-		ret.sort((a, b) => a.vote - b.vote);
+		ret.sort((a, b) => b.count - a.count);
 
 		return ret;
 	}
