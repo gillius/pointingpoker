@@ -73,7 +73,7 @@ export default function PokerBoardComponent(props) {
 					results &&
 					<>
 						<h3>Results</h3>
-						<p>Average: {results.average}</p>
+						<p>Average: {results.average.toFixed(2)}</p>
 						<table className="table table-responsive">
 							<thead>
 							<tr>
