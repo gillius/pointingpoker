@@ -53,7 +53,8 @@ export default function PokerBoardComponent(props) {
 						activePlayers.map(player => (
 								<tr key={player.id}>
 									<td>{player.joining ? 'Incoming player...' : player.name}</td>
-									<td>{showVotes || player == props.myPlayer ? player.vote : "..."}</td>
+									<td>{showVotes || player === props.myPlayer ? player.vote :
+											(player.vote !== null ? "..." : "")}</td>
 								</tr>
 						))
 					}
