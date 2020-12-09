@@ -1,0 +1,14 @@
+{
+	"name": "pointingpoker-parent",
+	"version": "0.1.0",
+	"private": true,
+	"description": "Parent package for pointing poker",
+	"main": "src/index.js",
+	"scripts": {
+		"install": "cd common && npm ci && cd ../client && npm ci && cd ../server && npm ci",
+		"build": "cd common && npm run build && cd ../client && npm run build",
+		"start": "cd server && node src/index.js"
+	},
+	"author": "Jason Winnebeck <gillius@gillius.org>",
+	"license": "GPL-3.0-or-later"
+}

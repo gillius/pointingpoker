@@ -22,9 +22,9 @@ License is GPL version 3 or any later version.
 
 ## Production mode
 
-* Build the common library in `common` folder with `npm ci && npm run build`
-* Build the frontend in `client` with `npm ci && npm run build`
-* Start the backend in `server` with `npm ci && node src/index.js`
+* `npm ci`
+* `npm run build`
+* `npm start`
 * Visit http://localhost:8080/
 
 # Known Issues
