@@ -16,6 +16,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '14.x'
+      
+      - name: Upgrade npm version
+        run: npm install -g npm@next-7
 
       - name: npm install and build - common
         run: |
@@ -30,9 +33,9 @@ jobs:
         working-directory: client
 
       - name: npm install and build - server
-        #Use force to workarorund weird error where client depends on common
+        #Requires npm 7.1.1+ to run npm ci here
         run: |
-          npm ci --force
+          npm ci
           npm run build --if-present
         working-directory: server
 
