@@ -1,6 +1,9 @@
 **/node_modules/
 **/build/
 
+.git/
+.idea/
+.dockerignore
 .github
 .gitignore
 Dockerfile

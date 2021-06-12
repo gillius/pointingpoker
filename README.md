@@ -27,6 +27,14 @@ License is GPL version 3 or any later version.
 * `npm start`
 * Visit http://localhost:8080/
 
+## Run from Docker
+
+Assuming you have Docker / [Docker Desktop](https://hub.docker.com/editions/community/docker-ce-desktop-windows)
+installed, running from docker hub-based image locally and interactively:
+
+* `docker run -it --rm -p 8080:8080 gillius/pointingpoker:latest`
+* Visit http://localhost:8080/
+
 # Known Issues
 
 1. Unsupported any proxies that block or degrade websocket functionality (i.e. by putting a short limit on websocket duration).
