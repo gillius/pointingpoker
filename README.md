@@ -15,8 +15,9 @@ License is GPL version 3 or any later version.
 
 ## Development mode
 
+* `npm ci`
 * Build the common library in `common` folder with `npm build` or `npm start` (if making live changes)
-* Start the backend in `server` with `node index.js`
+* Start the backend in `server` with `node src/index.js`
 * Start the frontend in `client` with `npm start`
 * Visit http://localhost:3000/
 

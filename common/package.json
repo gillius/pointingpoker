@@ -5,8 +5,8 @@
   "description": "",
   "main": "dist/PokerBoard.js",
   "scripts": {
-    "build": "npx babel src --out-dir dist --source-maps",
-    "start": "npx babel src --watch --out-dir dist --source-maps",
+    "build": "babel src --out-dir dist --source-maps",
+    "start": "babel src --watch --out-dir dist --source-maps",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jason Winnebeck <gillius@gillius.org>",
