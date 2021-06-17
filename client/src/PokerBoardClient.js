@@ -28,7 +28,7 @@ export default class PokerBoardClient {
 			parsedUrl.protocol = parsedUrl.protocol === 'http:' ? 'ws' : 'wss';
 			if (process.env.NODE_ENV === 'development')
 				parsedUrl.port = "8080";
-			url = new URL('/ws', parsedUrl).href;
+			url = new URL('./ws', parsedUrl).href;
 		}
 		this.ws = new WebSocket(url);
 
